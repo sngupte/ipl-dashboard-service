@@ -1,9 +1,4 @@
 import { React, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
-import { MatchDetailCard } from '../Components/MatchDetailsCard';
-import { MatchSmallCard } from '../Components/MatchSmallCard';
-import { PieChart } from 'react-minimal-pie-chart';
 import './HomePage.scss';
 import { TeamTile } from '../Components/TeamTile';
 
@@ -13,7 +8,7 @@ export const HomePage = () => {
     useEffect(
         () => {
             const fetchTeams = async () => {
-                const response = await fetch(`http://localhost:8080/team`);
+                const response = await fetch(`${process.env.REACT_APP_API_ROOT_URL}/team`);
                 const data = await response.json();
                 console.log(data);
                 setTeams(data);
@@ -27,7 +22,7 @@ export const HomePage = () => {
             <div className="header-section">
                 <h1 className='app-name'> Saurabh IPL Dashboard </h1>
             </div>
-            <div className="team-grid">{teams.map(team => <TeamTile teamName={team.teamName} />)}</div>
+            <div className="team-grid">{teams.map(team => <TeamTile key={team.id} teamName={team.teamName} />)}</div>
         </div>
     );
 }
